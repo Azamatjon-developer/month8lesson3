@@ -8,7 +8,7 @@ const Navbar: React.FC<{ item: NavbarType }> = ({ item }) => {
         to={item.path}
         className={({ isActive }) =>
           `text-20px font-semibold px-4 py-2 rounded-lg transition-all duration-300 ${
-            isActive ? 'active-nav' : 'text-white hover:text-indigo-300'
+            isActive ? 'active-nav' : 'text-white hover:text-blue-900'
           }`
         }
       >
