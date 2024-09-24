@@ -1,10 +1,18 @@
 import { useContext } from 'react';
 import { ProductType } from '../pages/Products';
 import { FaShoppingBasket } from "react-icons/fa";
+import { IoIosRemove } from "react-icons/io";
+
 import { Context } from '../context/Context';
 
 const ProductItem: React.FC<{ item: ProductType }> = ({ item }) => {
     const {setOrderList,orderList} = useContext(Context)
+    const locationPath = location.pathname
+    function handleRemoveItem (id:number) {
+      const removeItem = orderList.findIndex((item : ProductType) => item.id == id)
+      orderList.splice(removeItem, 1)
+      setOrderList([...orderList]) 
+    } 
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-2">
       <img
@@ -26,10 +34,14 @@ const ProductItem: React.FC<{ item: ProductType }> = ({ item }) => {
         <p className="text-2xl font-bold text-indigo-600 mb-4">
           ${item.price}
         </p>
-        <button onClick={() => setOrderList([...orderList,item])} className="flex items-center justify-center mt-4 w-full bg-indigo-500 text-white py-3 rounded-lg hover:bg-indigo-600 transition-colors duration-300">
+        {locationPath == "/orders" ?   <button onClick={() => handleRemoveItem(item.id)} className="flex items-center justify-center mt-4 w-full bg-red-500 text-white py-3 rounded-lg hover:bg-red-600 transition-colors duration-300">
+           Remove 
+          <IoIosRemove className="ml-2 text-[24px]" />
+        </button> :   <button onClick={() => setOrderList([...orderList,item])} className="flex items-center justify-center mt-4 w-full bg-indigo-500 text-white py-3 rounded-lg hover:bg-indigo-600 transition-colors duration-300">
           Order Now
           <FaShoppingBasket className="ml-2 text-[24px]" />
-        </button>
+        </button>}
+      
       </div>
     </div>
   );
