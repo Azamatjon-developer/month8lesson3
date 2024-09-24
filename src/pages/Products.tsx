@@ -16,6 +16,7 @@ const Products = () => {
 
   useEffect(() => {
     useAxios('/products').then((res) => {
+      localStorage.setItem("products", JSON.stringify(res.data.products))
       setProducts(
         res.data.products.map((item: any) => {
           const data: ProductType = {

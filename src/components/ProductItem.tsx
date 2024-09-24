@@ -4,6 +4,7 @@ import { FaShoppingBasket } from "react-icons/fa";
 import { IoIosRemove } from "react-icons/io";
 
 import { Context } from '../context/Context';
+import toast from 'react-hot-toast';
 
 const ProductItem: React.FC<{ item: ProductType }> = ({ item }) => {
     const {setOrderList,orderList} = useContext(Context)
@@ -34,10 +35,16 @@ const ProductItem: React.FC<{ item: ProductType }> = ({ item }) => {
         <p className="text-2xl font-bold text-indigo-600 mb-4">
           ${item.price}
         </p>
-        {locationPath == "/orders" ?   <button onClick={() => handleRemoveItem(item.id)} className="flex items-center justify-center mt-4 w-full bg-red-500 text-white py-3 rounded-lg hover:bg-red-600 transition-colors duration-300">
+        {locationPath == "/orders" ?   <button onClick={() => {
+          handleRemoveItem(item.id)
+          toast.success("Product removed successfully")
+        }} className="flex items-center justify-center mt-4 w-full bg-red-500 text-white py-3 rounded-lg hover:bg-red-600 transition-colors duration-300">
            Remove 
           <IoIosRemove className="ml-2 text-[24px]" />
-        </button> :   <button onClick={() => setOrderList([...orderList,item])} className="flex items-center justify-center mt-4 w-full bg-indigo-500 text-white py-3 rounded-lg hover:bg-indigo-600 transition-colors duration-300">
+        </button> :   <button onClick={() => {
+          setOrderList([...orderList,item])
+          toast.success("Product added successfully")
+        }} className="flex items-center justify-center mt-4 w-full bg-indigo-500 text-white py-3 rounded-lg hover:bg-indigo-600 transition-colors duration-300">
           Order Now
           <FaShoppingBasket className="ml-2 text-[24px]" />
         </button>}
